@@ -951,6 +951,9 @@ footer.site3 .wrap{padding-block:44px 26px}
     if(G.mob){ gr.addColorStop(0,'rgba(12,39,64,.7)'); gr.addColorStop(.6,'rgba(12,39,64,.45)'); gr.addColorStop(1,'rgba(12,39,64,.1)'); }
     else { gr.addColorStop(0,'rgba(12,39,64,.55)'); gr.addColorStop(f(cl+560),'rgba(12,39,64,.6)'); gr.addColorStop(f(cl+900),'rgba(18,58,92,.1)'); gr.addColorStop(1,'rgba(18,58,92,0)'); }
     g.fillStyle=gr; g.fillRect(0,0,w,h);
+
+    // Große Bildschirme: Raster und Wafer an der Inhaltsbreite weich ausblenden, damit es symmetrisch wirkt
+    var fl0=Math.max(0,(w-1200)/2); if(fl0>40){ var fm=g.createLinearGradient(0,0,w,0), fx=function(x){return Math.min(1,Math.max(0,x/w));}; fm.addColorStop(0,'rgba(0,0,0,1)'); fm.addColorStop(fx(fl0-60),'rgba(0,0,0,1)'); fm.addColorStop(fx(fl0+140),'rgba(0,0,0,0)'); fm.addColorStop(fx(w-fl0-140),'rgba(0,0,0,0)'); fm.addColorStop(fx(w-fl0+60),'rgba(0,0,0,1)'); fm.addColorStop(1,'rgba(0,0,0,1)'); g.save(); g.globalCompositeOperation='destination-out'; g.fillStyle=fm; g.fillRect(0,0,w,h); g.restore(); }
   }
   function loop(t){ draw(t); if(!reduce&&vis) requestAnimationFrame(loop); }
   if('IntersectionObserver' in window) new IntersectionObserver(function(e){ var v=e[0].isIntersecting; if(v&&!vis&&!reduce){vis=true;requestAnimationFrame(loop);} vis=v; }).observe(c);
